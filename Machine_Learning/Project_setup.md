@@ -58,10 +58,30 @@ A .gitignore file is a text file that tells Git, a version control system, which
 **Requirement.txt** - Requirements.txt (also known as requirements.txt) is a text file used in Python projects to manage dependencies, specifically listing the required Python packages and their versions
 
 - In our project folder, create a setup.py and requirement.txt
+
 Below code goes in your setup.py
 
-~~~python
+~~~py
     from setuptools import find_packages, setup
+    from typing import List
+
+
+    HYPEN_E_DOT='-e .'
+    def get_requirements(file_path:str)->List[str]:
+        '''
+        this function will return the list of requirements
+
+        '''
+        requirements=[]
+        with open(file_path) as file_obj:
+            requirements=file_obj.readlines()
+            requirements=[req.replace("\n","") for req in requirements]
+
+            if HYPEN_E_DOT in requirements:
+                requirements.remove(HYPEN_E_DOT)
+
+        
+        return requirements
 
 
     setup(
@@ -75,10 +95,22 @@ Below code goes in your setup.py
     url='https://github.com/your-username/your-project',  # Your project's URL
     license='MIT',  # Choose a license from the Python Software Foundation
     packages=find_packages(),  # List of packages to include
-    install_requires=[],  # Dependencies (optional)
+    install_requires=get_requirements('requirement.txt'),  # Dependencies (optional)
     classifiers=[],  # Optional classification metadata)
+
+    )
 ~~~
 
-- Create a new folder `src` as a package
-- in this folder, add __init__.py file  *This find_packages() created in the setup.py will automatically find the __init__ in any folder it is created*
+- In your requirements.txt file, list your package
 
+'''
+    pandas
+    numpy
+    seaborn
+    matplotlib
+    -e .
+'''
+
+- open terminal `pip install -r requirements.txt` 
+- Create a new folder `src` as a package
+- in this folder, add `__init__.py` file  *This find_packages() created in the setup.py will automatically find the `__init__` in any folder it is created*
