@@ -182,3 +182,5 @@ In the logger.py, we write following
 ~~~
 
 In Terminal, run src/logger.py and src/execpetion.py
+
+After runnning it, don't forget to add information
