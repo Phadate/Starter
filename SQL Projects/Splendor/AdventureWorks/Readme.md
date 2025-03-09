@@ -46,9 +46,37 @@ The database consists of **72 tables**, but only **9 tables** were used for this
 ### Customer Behavior Analysis
 
 1. **Top 10 Customers by Total Purchase Amount**  
+
+```SQL
+SELECT TOP 10 
+        soh.CustomerID,
+        pp.FirstName + ' ' + pp.LastName AS Fullname, 
+        ROUND(SUM(soh.TotalDue),2) AS Total_purchase_amount
+FROM Sales.SalesOrderHeader soh
+JOIN Sales.Customer sc ON soh.CustomerID =sc.CustomerID
+JOIN Person.Person pp ON sc.PersonID = pp.BusinessEntityID
+GROUP BY soh.CustomerID, pp.FirstName + ' ' + pp.LastName 
+ORDER BY Total_purchase_amount DESC;
+
+```
    - The top 10 customers spent between **$820K and $990K**, with **Roger Harui** leading at **$989.2K**.  
-   - The top 5 customers spent over **$900K**, significantly more than the 6th to 10th places.  
-   - **Recommendation:** Target these high-value customers with premium products, exclusive offers, or loyalty programs.
+   - The top 5 customers (Roger Harui to Ryan Calafato) spent over **$900K**, while the next 5 (Joseph Castellucio to Stacey Cereghino) spent between **$820K and $887K**. This indicates a clear distinction between the top-tier and mid-tier high-value customers
+   - The top 10 customers collectively contributed **~$8.9M** in revenue. This highlights the importance of retaining and nurturing these high-value customers, as they drive a significant portion of the company's revenue
+
+#### **Recommendations** 
+Target these high-value customers with premium products, exclusive offers, or loyalty programs.
+
+- **Personalized Engagement**  
+   - Assign dedicated account managers or customer success teams to these high-value customers.  
+   - Offer personalized recommendations based on their purchase history.
+
+- **Exclusive Offers**  
+   - Provide early access to new products, limited-edition items, or VIP discounts.  
+   - Create loyalty programs tailored to their spending habits.
+
+- **Upselling Opportunities**  
+   - Promote premium or high-margin products to these customers.  
+   - Bundle complementary products to increase average order value.
 
 2. **Customers Who Made Repeat Purchases**  
    - Only **1,153 out of 19,820 customers** made repeat purchases of the same product.  
