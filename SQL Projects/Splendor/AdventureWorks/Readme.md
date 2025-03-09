@@ -48,6 +48,7 @@ The database consists of **72 tables**, but only **9 tables** were used for this
 1. **Top 10 Customers by Total Purchase Amount**  
 
 ```SQL
+
 SELECT TOP 10 
         soh.CustomerID,
         pp.FirstName + ' ' + pp.LastName AS Fullname, 
@@ -59,6 +60,19 @@ GROUP BY soh.CustomerID, pp.FirstName + ' ' + pp.LastName
 ORDER BY Total_purchase_amount DESC;
 
 ```
+| **FullName**            | **Total_Purchase_Amount** |
+|--------------------------|---------------------------|
+| Roger Harui             | $989,184.08              |
+| Andrew Dixon            | $961,675.86              |
+| Reuben D'sa             | $954,021.92              |
+| Robert Vessa            | $919,801.82              |
+| Ryan Calafato           | $901,346.86              |
+| Joseph Castellucio      | $887,090.41              |
+| Kirk DeGrasse           | $841,866.55              |
+| Lindsey Camacho         | $834,475.93              |
+| Robin McGuigan          | $824,331.77              |
+| Stacey Cereghino        | $820,383.55              |
+
    - The top 10 customers spent between **$820K and $990K**, with **Roger Harui** leading at **$989.2K**.  
    - The top 5 customers (Roger Harui to Ryan Calafato) spent over **$900K**, while the next 5 (Joseph Castellucio to Stacey Cereghino) spent between **$820K and $887K**. This indicates a clear distinction between the top-tier and mid-tier high-value customers
    - The top 10 customers collectively contributed **~$8.9M** in revenue. This highlights the importance of retaining and nurturing these high-value customers, as they drive a significant portion of the company's revenue
@@ -78,9 +92,47 @@ Target these high-value customers with premium products, exclusive offers, or lo
    - Promote premium or high-margin products to these customers.  
    - Bundle complementary products to increase average order value.
 
-2. **Customers Who Made Repeat Purchases**  
-   - Only **1,153 out of 19,820 customers** made repeat purchases of the same product.  
-   - **Recommendation:** Improve customer engagement through personalized follow-ups, promotions, and reminders.
+2. **Customers Who Made Repeat Purchases** 
+
+```SQL
+-- 2.	Find customers who have made repeat purchases of the same product on different orders.
+SELECT 
+        Fullname,
+        COUNT(ProductCNT) AS  no_of_repeat_purchases -- This count number of times a customer had repeat purchases of the same product on different orders. 
+         
+FROM 
+        (
+            SELECT  soh.CustomerID,
+                    pp.FirstName + ' ' + pp.LastName AS Fullname,     
+                    p.name, 
+                    COUNT( sod.ProductID) AS ProductCNT
+            FROM Sales.SalesOrderHeader soh
+            JOIN Sales.SalesOrderDetail sod ON soh.SalesOrderID = sod.SalesOrderID
+            JOIN Production.Product p ON sod.ProductID = p.ProductID
+            JOIN Sales.Customer sc ON soh.CustomerID =sc.CustomerID
+            JOIN Person.Person pp ON sc.PersonID = pp.BusinessEntityID
+            GROUP BY soh.CustomerId,pp.FirstName + ' ' + pp.LastName, p.name) AS repeat
+
+WHERE productCNT > 1
+GROUP BY Fullname
+ORDER BY no_of_repeat_purchases DESC;
+```
+![Result From query!](/Starter/SQL%20Projects/Splendor/AdventureWorks/images/2.png "Customers with repeat purchase")
+
+- **Low Repeat Purchase Rate**  
+   - Out of **19,820 customers**, only **1,153** (5.8%) made repeat purchases of the same product.  
+   - This indicates a significant opportunity to improve customer retention and repeat purchase behavior.
+
+- **Top Repeat Customers**  
+   - **Reuben D'sa** leads with **107 repeat purchases**, followed by **Yale Li (97)** and **John Evans (96)**.  
+   - These customers demonstrate strong loyalty and are ideal candidates for targeted engagement.
+
+- **Product Stickiness**  
+   - Customers who repeatedly purchase the same product likely find it valuable or essential.  
+   - This behavior suggests opportunities for subscription models or bulk purchase discounts.
+
+#### **Recommendations** 
+   While only **5.8% of customers** made repeat purchases of the same product, these customers represent a valuable segment with high loyalty and potential for increased revenue. By implementing targeted strategies such as loyalty programs, personalized recommendations, and subscription models, **Adventure Works Cycles** can enhance customer retention and drive repeat purchases.
 
 3. **Customers with a 30% Drop in Spending**  
    - **2,947 customers** (14% of the total) experienced a **30% or greater decline** in spending compared to the previous year.  
