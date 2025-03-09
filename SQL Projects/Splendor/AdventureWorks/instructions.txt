@@ -1,0 +1,42 @@
+AdventureWorks, a global bicycle manufacturing company, is facing challenges in understanding customer purchasing behavior, identifying top sales representatives, optimizing product sales, and detecting declining revenue trends. As a data analyst, your task is to use T-SQL to extract actionable insights from the AdventureWorks database, enabling the management to make data-driven decisions.
+Project Objectives:
+•	Analyze customer purchase patterns and identify high-value customers.
+•	Measure sales performance trends over time.
+•	Evaluate the performance of sales representatives and their revenue contribution.
+•	Detect declining sales trends and customer churn risk.
+•	Identify products frequently purchased together to optimize marketing strategies.
+Datasets Used (AdventureWorks Schema & Tables):
+Your queries will involve the following key tables:
+•	Sales.SalesOrderHeader (Order transactions)
+•	Sales.SalesOrderDetail (Detailed order line items)
+•	Sales.SalesPerson (Sales representatives' details)
+•	Person.Person (Customer and employee basic information)
+•	Production.Product (Product details)
+•	Sales.Customer (Customer records)
+•	Production.ProductCategory (Product categories)
+Project Tasks & Questions:
+You are required to answer the following 20 analytical questions using T-SQL queries:
+Customer Behavior Analysis
+1.	Retrieve the top 10 customers by total purchase amount.
+2.	Find customers who have made repeat purchases of the same product on different orders.
+3.	List customers whose spending has dropped by more than 30% compared to the previous year.
+4.	Identify the average number of days between repeat purchases for each customer.
+5.	Find the top 5 most common product categories purchased by customers.
+Sales Performance Analysis
+6.	Calculate total monthly sales revenue over the past three years.
+7.	Identify the most profitable products in terms of total revenue.
+8.	Determine the top 5 sales representatives based on total revenue generated.
+9.	Calculate the year-over-year sales growth rate.
+10.	Identify the top 5 regions where AdventureWorks generates the most revenue.
+Product and Inventory Insights
+11.	Find products frequently purchased together (appear in the same order).
+12.	Retrieve products that have never been sold.
+13.	Find the best-selling product in each category.
+14.	Identify the most returned products based on order cancellations.
+15.	Find products with the highest order quantities but lowest total revenue.
+Advanced Business Insights
+16.	Calculate the monthly sales growth rate using a window function.
+17.	Identify customers who purchased the same product multiple times in different orders.
+18.	Compute a 3-month moving average revenue per sales representative.
+19.	Find frequently purchased product pairs using self-joins.
+20.	Detect customers whose spending has declined significantly over time.
