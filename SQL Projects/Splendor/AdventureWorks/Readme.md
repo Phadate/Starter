@@ -117,7 +117,7 @@ WHERE productCNT > 1
 GROUP BY Fullname
 ORDER BY no_of_repeat_purchases DESC;
 ```
-![Result From query!](/Starter/SQL%20Projects/Splendor/AdventureWorks/images/2.png "Customers with repeat purchase")
+![Result From query!](/SQL Projects/Splendor/AdventureWorks/images/2.png "Customers with repeat purchase")
 
 - **Low Repeat Purchase Rate**  
    - Out of **19,820 customers**, only **1,153** (5.8%) made repeat purchases of the same product.  
